@@ -101,7 +101,7 @@ export default {
   },
   login: {
     welcome: 'Welcome to the system',
-    message: 'Backstage management system',
+    message: 'Login and use file encryption and decryption system',
     username: 'Username',
     password: 'Password',
     register: 'Register',
