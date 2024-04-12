@@ -62,10 +62,45 @@ const adminList = [
         }
       }
     ]
+  },
+  {
+    path: '/components',
+    component: '#',
+    redirect: '/components/form/default-form',
+    name: 'ComponentsDemo',
+    meta: {
+      title: 'router.component',
+      icon: 'bx:bxs-component',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'form',
+        component: '##',
+        name: 'Form',
+        meta: {
+          title: 'router.form',
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'default-form',
+            component: 'views/Components/Form/DefaultForm',
+            name: 'DefaultForm',
+            meta: {
+              title: 'router.defaultForm'
+            }
+          }
+        ]
+      }
+    ]
   }
 ]
 
 const testList: string[] = [
+  '/components',
+  '/components/form',
+  '/components/form/default-form',
   '/level',
   '/level/menu1',
   '/level/menu1/menu1-1',

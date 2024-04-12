@@ -114,6 +114,38 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         }
       }
     ]
+  },
+  {
+    path: '/components',
+    component: Layout,
+    name: 'ComponentsDemo',
+    meta: {
+      title: t('router.component'),
+      icon: 'bx:bxs-component',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'form',
+        component: getParentLayout(),
+        redirect: '/components/form/default-form',
+        name: 'Form',
+        meta: {
+          title: t('router.form'),
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'default-form',
+            component: () => import('@/views/Components/Form/DefaultForm.vue'),
+            name: 'DefaultForm',
+            meta: {
+              title: t('router.defaultForm')
+            }
+          }
+        ]
+      }
+    ]
   }
 ]
 

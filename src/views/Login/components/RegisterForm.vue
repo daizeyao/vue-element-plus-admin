@@ -19,7 +19,6 @@ const { required } = useValidator()
 const statusMsg = ref('获取验证码')
 const emailloading = ref(false)
 const emailable = ref(false)
-let timerid
 const sendVerificationCode = async () => {
   try {
     emailloading.value = true
@@ -30,7 +29,7 @@ const sendVerificationCode = async () => {
     emailloading.value = false
     ElMessage.success('发送成功，验证码有效期5分钟')
     let count = 60
-    timerid = setInterval(() => {
+    let timerid = setInterval(() => {
       if (count <= 0) {
         clearInterval(timerid)
         emailable.value = false
