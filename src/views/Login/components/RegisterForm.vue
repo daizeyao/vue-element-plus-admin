@@ -3,7 +3,7 @@ import { Form, FormSchema } from '@/components/Form'
 import { reactive, ref } from 'vue'
 import { useI18n } from '@/hooks/web/useI18n'
 import { useForm } from '@/hooks/web/useForm'
-import { ElButton, ElInput, FormRules } from 'element-plus'
+import { ElButton, ElInput, FormRules, ElMessage } from 'element-plus'
 import { useValidator } from '@/hooks/web/useValidator'
 
 const emit = defineEmits(['to-login'])
@@ -14,6 +14,38 @@ const { getElFormExpose } = formMethods
 const { t } = useI18n()
 
 const { required } = useValidator()
+
+// 定义发送验证码的函数
+const statusMsg = ref('获取验证码')
+const emailloading = ref(false)
+const emailable = ref(false)
+let timerid
+const sendVerificationCode = async () => {
+  try {
+    emailloading.value = true
+    emailable.value = true
+    statusMsg.value = '验证码发送中...'
+    // 在这里调用你的API来发送验证码
+    // await yourApi.sendVerificationCode()
+    emailloading.value = false
+    ElMessage.success('发送成功，验证码有效期5分钟')
+    let count = 60
+    timerid = setInterval(() => {
+      if (count <= 0) {
+        clearInterval(timerid)
+        emailable.value = false
+        statusMsg.value = '获取验证码'
+      } else {
+        statusMsg.value = `${count--}秒后重新发送`
+      }
+    }, 1000)
+  } catch (error) {
+    console.error(error)
+    emailloading.value = false
+    emailable.value = false
+    statusMsg.value = '获取验证码'
+  }
+}
 
 const schema = reactive<FormSchema[]>([
   {
@@ -71,6 +103,38 @@ const schema = reactive<FormSchema[]>([
       },
       strength: true,
       placeholder: t('login.passwordPlaceholder')
+    }
+  },
+  {
+    field: 'email',
+    label: t('login.email'),
+    colProps: {
+      span: 24
+    },
+    formItemProps: {
+      slots: {
+        default: (formData) => {
+          return (
+            <div class="w-[100%] flex">
+              <ElInput
+                class="w-[50%]"
+                v-model={formData.code}
+                placeholder={t('login.emailPlaceholder')}
+              />
+              <ElButton
+                class="w-[50%]"
+                type="primary"
+                loading={emailloading.value}
+                onClick={sendVerificationCode}
+                disabled={emailable.value}
+                round
+              >
+                {statusMsg.value}
+              </ElButton>
+            </div>
+          )
+        }
+      }
     }
   },
   {

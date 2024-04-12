@@ -113,6 +113,9 @@ export default {
     forgetPassword: 'Forget password',
     usernamePlaceholder: 'Please input username',
     passwordPlaceholder: 'Please input password',
+    email: 'E-mail',
+    emailPlaceholder: 'Please input e-mail',
+    sendVerificationCode: 'Send verification code',
     code: 'Verification code',
     codePlaceholder: 'Please input verification code'
   },
