@@ -13,6 +13,10 @@ export const loginOutApi = (): Promise<IResponse> => {
   return request.get({ url: '/mock/user/loginOut' })
 }
 
+export const sendCodeApi = (email: string): Promise<IResponse> => {
+  return request.post({ url: 'http://localhost:3006/api/email', data: { email } })
+}
+
 export const getAdminRoleApi = (
   params: RoleParams
 ): Promise<IResponse<AppCustomRouteRecordRaw[]>> => {

@@ -5,11 +5,12 @@ import { useI18n } from '@/hooks/web/useI18n'
 import { useForm } from '@/hooks/web/useForm'
 import { ElButton, ElInput, FormRules, ElMessage } from 'element-plus'
 import { useValidator } from '@/hooks/web/useValidator'
+import { sendCodeApi } from '@/api/login'
 
 const emit = defineEmits(['to-login'])
 
 const { formRegister, formMethods } = useForm()
-const { getElFormExpose } = formMethods
+const { getElFormExpose, getFormData } = formMethods
 
 const { t } = useI18n()
 
@@ -19,13 +20,14 @@ const { required } = useValidator()
 const statusMsg = ref('获取验证码')
 const emailloading = ref(false)
 const emailable = ref(false)
-const sendVerificationCode = async () => {
+const emailcode = ref()
+const sendVerificationCode = async (email: string) => {
   try {
     emailloading.value = true
     emailable.value = true
     statusMsg.value = '验证码发送中...'
-    // 在这里调用你的API来发送验证码
-    // await yourApi.sendVerificationCode()
+    const response = await sendCodeApi(email)
+    emailcode.value = response.data.emailcode
     emailloading.value = false
     ElMessage.success('发送成功，验证码有效期5分钟')
     let count = 60
@@ -100,7 +102,7 @@ const schema = reactive<FormSchema[]>([
       style: {
         width: '100%'
       },
-      strength: true,
+      strength: false,
       placeholder: t('login.passwordPlaceholder')
     }
   },
@@ -115,21 +117,7 @@ const schema = reactive<FormSchema[]>([
         default: (formData) => {
           return (
             <div class="w-[100%] flex">
-              <ElInput
-                class="w-[50%]"
-                v-model={formData.code}
-                placeholder={t('login.emailPlaceholder')}
-              />
-              <ElButton
-                class="w-[50%]"
-                type="primary"
-                loading={emailloading.value}
-                onClick={sendVerificationCode}
-                disabled={emailable.value}
-                round
-              >
-                {statusMsg.value}
-              </ElButton>
+              <ElInput v-model={formData.email} placeholder={t('login.emailPlaceholder')} />
             </div>
           )
         }
@@ -148,6 +136,16 @@ const schema = reactive<FormSchema[]>([
           return (
             <div class="w-[100%] flex">
               <ElInput v-model={formData.code} placeholder={t('login.codePlaceholder')} />
+              <ElButton
+                class="w-[60%] ml-10px"
+                type="primary"
+                loading={emailloading.value}
+                onClick={() => sendVerificationCode(formData.email)}
+                disabled={emailable.value}
+                round
+              >
+                {statusMsg.value}
+              </ElButton>
             </div>
           )
         }
@@ -190,8 +188,31 @@ const schema = reactive<FormSchema[]>([
 const rules: FormRules = {
   username: [required()],
   password: [required()],
-  check_password: [required()],
-  code: [required()]
+  check_password: [
+    {
+      asyncValidator: async (_, val, callback) => {
+        const formData = await getFormData()
+        const { password } = formData
+        if (val !== password) {
+          callback(new Error('两次密码不一致'))
+        } else {
+          callback()
+        }
+      }
+    }
+  ],
+  code: [
+    required(),
+    {
+      asyncValidator: async (_, val, callback) => {
+        if (val !== emailcode.value) {
+          callback(new Error('验证码错误'))
+        } else {
+          callback()
+        }
+      }
+    }
+  ]
 }
 
 const toLogin = () => {
