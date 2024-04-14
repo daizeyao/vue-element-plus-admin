@@ -185,6 +185,8 @@ const schema = reactive<FormSchema[]>([
   }
 ])
 
+const isRegisterClick = ref(false)
+
 const rules: FormRules = {
   username: [required()],
   password: [required()],
@@ -205,7 +207,7 @@ const rules: FormRules = {
     required(),
     {
       asyncValidator: async (_, val, callback) => {
-        if (val !== emailcode.value) {
+        if (val !== emailcode.value && isRegisterClick.value) {
           callback(new Error('验证码错误'))
         } else {
           callback()
@@ -222,13 +224,16 @@ const toLogin = () => {
 const loading = ref(false)
 
 const loginRegister = async () => {
+  isRegisterClick.value = true //只有点击才进行正确错误验证
   const formRef = await getElFormExpose()
   formRef?.validate(async (valid) => {
     if (valid) {
       try {
+        isRegisterClick.value = false
         loading.value = true
         toLogin()
       } finally {
+        isRegisterClick.value = false
         loading.value = false
       }
     }
