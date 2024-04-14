@@ -5,108 +5,46 @@ const timeout = 1000
 
 const adminList = [
   {
-    path: '/level',
+    path: '/file-encode',
     component: '#',
-    redirect: '/level/menu1/menu1-1/menu1-1-1',
-    name: 'Level',
-    meta: {
-      title: 'router.level',
-      icon: 'carbon:skill-level-advanced'
-    },
+    name: 'FileEncode',
+    meta: {},
     children: [
       {
-        path: 'menu1',
-        name: 'Menu1',
-        component: '##',
-        redirect: '/level/menu1/menu1-1/menu1-1-1',
+        path: 'index',
+        component: 'views/Components/File/FileEncode',
+        name: 'File-encode',
         meta: {
-          title: 'router.menu1'
-        },
-        children: [
-          {
-            path: 'menu1-1',
-            name: 'Menu11',
-            component: '##',
-            redirect: '/level/menu1/menu1-1/menu1-1-1',
-            meta: {
-              title: 'router.menu11',
-              alwaysShow: true
-            },
-            children: [
-              {
-                path: 'menu1-1-1',
-                name: 'Menu111',
-                component: 'views/Level/Menu111',
-                meta: {
-                  title: 'router.menu111'
-                }
-              }
-            ]
-          },
-          {
-            path: 'menu1-2',
-            name: 'Menu12',
-            component: 'views/Level/Menu12',
-            meta: {
-              title: 'router.menu12'
-            }
-          }
-        ]
-      },
-      {
-        path: 'menu2',
-        name: 'Menu2Demo',
-        component: 'views/Level/Menu2',
-        meta: {
-          title: 'router.menu2'
+          title: 'router.encode',
+          icon: 'bx:bxs-component'
         }
       }
     ]
   },
   {
-    path: '/components',
+    path: '/file-decode',
     component: '#',
-    redirect: '/components/form/default-form',
-    name: 'ComponentsDemo',
-    meta: {
-      title: 'router.component',
-      icon: 'bx:bxs-component',
-      alwaysShow: true
-    },
+    name: 'FileDecode',
+    meta: {},
     children: [
       {
-        path: 'form',
-        component: '##',
-        name: 'Form',
+        path: 'index',
+        component: 'views/Components/File/FileDecode',
+        name: 'File-decode',
         meta: {
-          title: 'router.form',
-          alwaysShow: true
-        },
-        children: [
-          {
-            path: 'default-form',
-            component: 'views/Components/Form/DefaultForm',
-            name: 'DefaultForm',
-            meta: {
-              title: 'router.defaultForm'
-            }
-          }
-        ]
+          title: 'router.decode',
+          icon: 'bx:bxs-component'
+        }
       }
     ]
   }
 ]
 
 const testList: string[] = [
-  '/components',
-  '/components/form',
-  '/components/form/default-form',
-  '/level',
-  '/level/menu1',
-  '/level/menu1/menu1-1',
-  '/level/menu1/menu1-1/menu1-1-1',
-  '/level/menu1/menu1-2',
-  '/level/menu2'
+  '/file-encode',
+  '/file-encode/index',
+  '/file-decode',
+  '/file-decode/index'
 ]
 
 export default [

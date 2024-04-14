@@ -10,7 +10,7 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
   {
     path: '/',
     component: Layout,
-    redirect: '/level',
+    redirect: '/file-encode/index',
     name: 'Root',
     meta: {
       hidden: true
@@ -57,93 +57,38 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
 
 export const asyncRouterMap: AppRouteRecordRaw[] = [
   {
-    path: '/level',
+    path: '/file-encode',
     component: Layout,
-    redirect: '/level/menu1/menu1-1/menu1-1-1',
-    name: 'Level',
-    meta: {
-      title: t('router.level'),
-      icon: 'carbon:skill-level-advanced'
-    },
+    redirect: '/file-encode/index',
+    name: 'FileEncode1',
+    meta: {},
     children: [
       {
-        path: 'menu1',
-        name: 'Menu1',
-        component: getParentLayout(),
-        redirect: '/level/menu1/menu1-1/menu1-1-1',
+        path: 'index',
+        component: () => import('@/views/Components/File/FileEncode.vue'),
+        name: 'File-encode',
         meta: {
-          title: t('router.menu1')
-        },
-        children: [
-          {
-            path: 'menu1-1',
-            name: 'Menu11',
-            component: getParentLayout(),
-            redirect: '/level/menu1/menu1-1/menu1-1-1',
-            meta: {
-              title: t('router.menu11'),
-              alwaysShow: true
-            },
-            children: [
-              {
-                path: 'menu1-1-1',
-                name: 'Menu111',
-                component: () => import('@/views/Level/Menu111.vue'),
-                meta: {
-                  title: t('router.menu111')
-                }
-              }
-            ]
-          },
-          {
-            path: 'menu1-2',
-            name: 'Menu12',
-            component: () => import('@/views/Level/Menu12.vue'),
-            meta: {
-              title: t('router.menu12')
-            }
-          }
-        ]
-      },
-      {
-        path: 'menu2',
-        name: 'Menu2',
-        component: () => import('@/views/Level/Menu2.vue'),
-        meta: {
-          title: t('router.menu2')
+          title: 'router.encode',
+          icon: 'bx:bxs-component'
         }
       }
     ]
   },
   {
-    path: '/components',
+    path: '/file-decode',
     component: Layout,
-    name: 'ComponentsDemo',
-    meta: {
-      title: t('router.component'),
-      icon: 'bx:bxs-component',
-      alwaysShow: true
-    },
+    redirect: '/file-decode/index',
+    name: 'FileDecode',
+    meta: {},
     children: [
       {
-        path: 'form',
-        component: getParentLayout(),
-        redirect: '/components/form/default-form',
-        name: 'Form',
+        path: 'index',
+        component: () => import('@/views/Components/File/FileDecode.vue'),
+        name: 'File-decode',
         meta: {
-          title: t('router.form'),
-          alwaysShow: true
-        },
-        children: [
-          {
-            path: 'default-form',
-            component: () => import('@/views/Components/Form/DefaultForm.vue'),
-            name: 'DefaultForm',
-            meta: {
-              title: t('router.defaultForm')
-            }
-          }
-        ]
+          title: 'router.decode',
+          icon: 'bx:bxs-component'
+        }
       }
     ]
   }
