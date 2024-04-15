@@ -1,12 +1,6 @@
 const nodeMail = require('./nodemailer.js')
-const express = require('express')
-const cors = require('cors')
-const app = express()
 
-app.use(cors())
-app.use(express.json())
-
-app.post('/api/email', async (req, res) => {
+async function sendCode(req, res) {
   const email = req.body.email
   const emailcode = String(Math.floor(Math.random() * 1000000)).padEnd(6, '0')
   const mail = {
@@ -32,8 +26,6 @@ app.post('/api/email', async (req, res) => {
       })
     }
   })
-})
+}
 
-app.listen(3006, () => {
-  console.log('邮件发送服务开启成功')
-})
+module.exports = sendCode

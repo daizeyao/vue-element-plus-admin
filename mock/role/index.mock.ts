@@ -16,7 +16,7 @@ const adminList = [
         name: 'File-encode',
         meta: {
           title: 'router.encode',
-          icon: 'bx:bxs-component'
+          icon: 'bx:bxs-file-import'
         }
       }
     ]
@@ -33,7 +33,7 @@ const adminList = [
         name: 'File-decode',
         meta: {
           title: 'router.decode',
-          icon: 'bx:bxs-component'
+          icon: 'bx:bxs-file-export'
         }
       }
     ]

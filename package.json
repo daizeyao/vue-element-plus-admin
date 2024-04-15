@@ -7,7 +7,7 @@
   "scripts": {
     "i": "pnpm install",
     "dev": "concurrently \"pnpm vite --mode base\" \"pnpm run start:express\"",
-    "start:express": "node ./express/sendCode.js",
+    "start:express": "node ./express/app.js",
     "ts:check": "pnpm vue-tsc --noEmit --skipLibCheck",
     "build:pro": "pnpm vite build --mode pro",
     "build:gitee": "pnpm vite build --mode gitee",
