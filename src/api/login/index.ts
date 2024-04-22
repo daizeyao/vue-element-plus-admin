@@ -1,12 +1,13 @@
 import request from '@/axios'
-import type { UserType } from './types'
+import type { UserLoginType } from './types'
 
 interface RoleParams {
   roleName: string
 }
 
-export const loginApi = (data: UserType): Promise<IResponse<UserType>> => {
-  return request.post({ url: '/mock/user/login', data })
+//传入的数据格式为UserLoginType，返回的数据为IResponse
+export const loginApi = (data: UserLoginType): Promise<IResponse> => {
+  return request.post({ url: 'http://localhost:3006/login', data })
 }
 
 export const loginOutApi = (): Promise<IResponse> => {
@@ -14,7 +15,7 @@ export const loginOutApi = (): Promise<IResponse> => {
 }
 
 export const sendCodeApi = (email: string): Promise<IResponse> => {
-  return request.post({ url: 'http://localhost:3006/api/email', data: { email } })
+  return request.post({ url: 'http://localhost:3006/sendCode', data: { email } })
 }
 
 export const getAdminRoleApi = (

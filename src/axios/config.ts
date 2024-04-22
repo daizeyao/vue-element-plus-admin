@@ -39,13 +39,16 @@ const defaultResponseInterceptors = (response: AxiosResponse) => {
     // 如果是文件流，直接过
     return response
   } else if (response.data.code === SUCCESS_CODE) {
+    //如果成功直接返回data
     return response.data
   } else {
+    //非成功码弹窗报错
     ElMessage.error(response?.data?.message)
     if (response?.data?.code === 401) {
       const userStore = useUserStoreWithOut()
       userStore.logout()
     }
+    return response.data
   }
 }
 

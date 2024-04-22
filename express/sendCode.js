@@ -1,4 +1,13 @@
-const nodeMail = require('./nodemailer.js')
+const nodemailer = require('nodemailer')
+const nodeMail = nodemailer.createTransport({
+  service: 'qq',
+  port: 465,
+  secure: true,
+  auth: {
+    user: '1192313493@qq.com',
+    pass: 'ofymhdpjujimhgcd'
+  }
+})
 
 async function sendCode(req, res) {
   const email = req.body.email
@@ -16,12 +25,14 @@ async function sendCode(req, res) {
   await nodeMail.sendMail(mail, (err, info) => {
     if (!err) {
       res.send({
-        code: 0,
+        code: 200,
+        message: '发送成功',
         data: { emailcode: emailcode }
       })
     } else {
       res.send({
         code: 500,
+        message: '发送失败',
         data: { emailcode: emailcode }
       })
     }

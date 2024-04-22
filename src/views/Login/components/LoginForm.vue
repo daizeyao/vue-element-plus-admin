@@ -229,7 +229,12 @@ const signIn = async () => {
       const formData = await getFormData<UserType>()
 
       try {
-        const res = await loginApi(formData)
+        const res = await loginApi({
+          username: formData.username,
+          password: formData.password
+        })
+
+        console.log(res)
 
         if (res) {
           // 是否记住我
