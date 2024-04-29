@@ -231,9 +231,9 @@ const signIn = async () => {
       try {
         const res = await loginApi({
           username: formData.username,
-          password: formData.password
+          password: formData.password,
+          email: ''
         })
-
         console.log(res)
 
         if (res) {
@@ -241,7 +241,8 @@ const signIn = async () => {
           if (unref(remember)) {
             userStore.setLoginInfo({
               username: formData.username,
-              password: formData.password
+              password: formData.password,
+              email: ''
             })
           } else {
             userStore.setLoginInfo(undefined)

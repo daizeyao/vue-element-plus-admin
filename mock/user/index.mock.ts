@@ -6,21 +6,18 @@ const List: {
   username: string
   password: string
   role: string
-  roleId: string
   permissions: string | string[]
 }[] = [
   {
     username: 'admin',
     password: 'admin',
     role: 'admin',
-    roleId: '1',
     permissions: ['*.*.*']
   },
   {
-    username: 'test',
-    password: 'test',
-    role: 'test',
-    roleId: '2',
+    username: 'guest',
+    password: 'guest',
+    role: 'guest',
     permissions: ['example:dialog:create', 'example:dialog:delete']
   }
 ]
@@ -84,21 +81,6 @@ export default [
       return {
         code: SUCCESS_CODE,
         data: null
-      }
-    }
-  },
-  // 验证码发送
-  {
-    url: '/mock/user/sendCode',
-    method: 'post',
-    timeout,
-    response: ({ body }) => {
-      const { email } = body
-      const verificationCode = Math.floor(100000 + Math.random() * 900000)
-      console.log(`验证码已发送到 ${email}: ${verificationCode}`)
-      return {
-        code: SUCCESS_CODE,
-        data: { message: '验证码已发送' }
       }
     }
   }

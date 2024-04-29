@@ -10,6 +10,10 @@ export const loginApi = (data: UserLoginType): Promise<IResponse> => {
   return request.post({ url: 'http://localhost:3006/login', data })
 }
 
+export const registerApi = (data: UserLoginType): Promise<IResponse> => {
+  return request.post({ url: 'http://localhost:3006/register', data })
+}
+
 export const loginOutApi = (): Promise<IResponse> => {
   return request.get({ url: '/mock/user/loginOut' })
 }

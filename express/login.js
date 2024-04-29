@@ -25,19 +25,19 @@ async function login(req, res) {
         if (rows[0].hashed_password === hashedPassword) {
           res.send({
             code: 200,
-            message: '登录成功'
+            message: '登录成功',
+            data: {
+              username: username,
+              password: password,
+              role: rows[0].role,
+              permissions: ['*.*.*']
+            }
           })
         } else {
-          res.send({
-            code: 401,
-            message: '用户名或密码错误'
-          })
+          res.send({ code: 401, message: '用户名或密码错误' })
         }
       } else {
-        res.send({
-          code: 401,
-          message: '用户名不存在'
-        })
+        res.send({ code: 401, message: '用户名不存在' })
       }
     }
   }

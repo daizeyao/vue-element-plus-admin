@@ -3,9 +3,10 @@ import { Form, FormSchema } from '@/components/Form'
 import { reactive, ref } from 'vue'
 import { useI18n } from '@/hooks/web/useI18n'
 import { useForm } from '@/hooks/web/useForm'
+import { UserType } from '@/api/login/types'
 import { ElButton, ElInput, FormRules, ElMessage } from 'element-plus'
 import { useValidator } from '@/hooks/web/useValidator'
-import { sendCodeApi } from '@/api/login'
+import { sendCodeApi, registerApi } from '@/api/login'
 
 const emit = defineEmits(['to-login'])
 
@@ -231,7 +232,15 @@ const loginRegister = async () => {
       try {
         isRegisterClick.value = false
         loading.value = true
-        toLogin()
+        const formData = await getFormData<UserType>()
+        const res = await registerApi({
+          username: formData.username,
+          password: formData.password,
+          email: ''
+        })
+        if (res) {
+          toLogin()
+        }
       } finally {
         isRegisterClick.value = false
         loading.value = false

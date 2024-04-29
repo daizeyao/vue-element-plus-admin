@@ -10,6 +10,15 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
   {
     path: '/',
     component: Layout,
+    redirect: '/file-encode',
+    name: 'Root',
+    meta: {
+      hidden: true
+    }
+  },
+  {
+    path: '/file-encode',
+    component: Layout,
     redirect: '/file-encode/index',
     name: 'Root',
     meta: {
@@ -60,8 +69,10 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     path: '/file-encode',
     component: Layout,
     redirect: '/file-encode/index',
-    name: 'FileEncode1',
-    meta: {},
+    name: 'FileEncode',
+    meta: {
+      alwaysShow: true
+    },
     children: [
       {
         path: 'index',
