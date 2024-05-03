@@ -57,7 +57,7 @@ export default [
       const { roleName } = query
       return {
         code: SUCCESS_CODE,
-        data: roleName === 'admin' ? adminList : testList
+        data: roleName === 'admin' ? adminList : adminList //modified
       }
     }
   }
