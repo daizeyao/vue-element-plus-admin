@@ -323,7 +323,21 @@ export default defineComponent({
                 }
               })
 
-              return (
+              return item.component === ComponentNameEnum.UPLOAD ? (
+                <Com
+                  vModel:file-list={itemVal.value}
+                  ref={(el: any) => setComponentRefMap(el, item.field)}
+                  {...(autoSetPlaceholder && setTextPlaceholder(item))}
+                  {...setComponentProps(item)}
+                  style={
+                    item.componentProps?.style || {
+                      width: '100%'
+                    }
+                  }
+                >
+                  {{ ...slotsMap }}
+                </Com>
+              ) : (
                 <Com
                   vModel={itemVal.value}
                   ref={(el: any) => setComponentRefMap(el, item.field)}
@@ -386,6 +400,10 @@ export default defineComponent({
         {...getFormBindValue()}
         model={unref(getProps).isCustom ? unref(getProps).model : formModel}
         class={prefixCls}
+        // @ts-ignore
+        onSubmit={(e: Event) => {
+          e.preventDefault()
+        }}
       >
         {{
           // 如果需要自定义，就什么都不渲染，而是提供默认插槽

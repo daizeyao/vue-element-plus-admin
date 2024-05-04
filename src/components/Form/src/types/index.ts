@@ -21,6 +21,8 @@ import {
   UploadProps
 } from 'element-plus'
 import { IEditorConfig } from '@wangeditor/editor'
+import { JsonEditorProps } from '@/components/JsonEditor'
+import { IAgreeProps } from '@/components/IAgree'
 import { CSSProperties } from 'vue'
 
 export interface PlaceholderModel {
@@ -53,7 +55,10 @@ export enum ComponentNameEnum {
   INPUT_PASSWORD = 'InputPassword',
   EDITOR = 'Editor',
   TREE_SELECT = 'TreeSelect',
-  UPLOAD = 'Upload'
+  UPLOAD = 'Upload',
+  JSON_EDITOR = 'JsonEditor',
+  ICON_PICKER = 'IconPicker',
+  I_AGREE = 'IAgree'
 }
 
 type CamelCaseComponentName = keyof typeof ComponentNameEnum extends infer K
@@ -620,6 +625,8 @@ export interface FormSchema {
     | InputPasswordComponentProps
     | TreeSelectComponentProps
     | UploadComponentProps
+    | JsonEditorProps
+    | IAgreeProps
     | any
 
   /**

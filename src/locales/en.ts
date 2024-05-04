@@ -127,6 +127,7 @@ export default {
     decode: 'File-decode'
   },
   fileDemo: {
+    formDes: 'Be sure to re upload the file every time you encrypt or decrypt it',
     fileencode: 'File Encode',
     filedecode: 'File Decode',
     uploadClick: 'Click to upload',

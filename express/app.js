@@ -13,7 +13,7 @@ connectDB()
 
 app.use(
   cors({
-    exposedHeaders: ['Content-Disposition']
+    exposedHeaders: ['Content-Disposition', 'Content-Type']
   })
 )
 app.use(express.json())

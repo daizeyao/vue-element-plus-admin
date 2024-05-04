@@ -5,7 +5,7 @@ import { useI18n } from '@/hooks/web/useI18n'
 import { ContentWrap } from '@/components/ContentWrap'
 import { useAppStore } from '@/store/modules/app'
 import { FormSchema } from '@/components/Form'
-import { ElInput, ElFormItem, ElMessage, ElMessageBox } from 'element-plus'
+import { ElInput, ElFormItem, ElMessage, ElMessageBox, ElUpload } from 'element-plus'
 import { BaseButton } from '@/components/Button'
 import { useForm } from '@/hooks/web/useForm'
 import { decodeApi } from '@/api/file'
@@ -29,7 +29,7 @@ const rules = {
 }
 
 const { formRegister, formMethods } = useForm()
-const { getFormData, getElFormExpose, setValues } = formMethods
+const { getFormData, getElFormExpose, setValues, getComponentExpose } = formMethods
 
 const schema = reactive<FormSchema[]>([
   {
@@ -124,15 +124,39 @@ const fileDecode = async () => {
         })
         // console.log(res)
         if (res) {
-          // 创建一个新的 Blob 对象，使用类型数组和 mime 类型
-          const blob = new Blob([res.data])
-          const link = document.createElement('a')
-          link.href = window.URL.createObjectURL(blob)
-          const filename = (res as any).headers['content-disposition'].split('filename=')[1]
-          link.download = filename.slice(1, filename.length - 1) // 从响应头中获取文件名并移除引号
-          link.click()
+          const contentType = (res as any).headers['content-type']
+          if (contentType === 'application/json; charset=utf-8') {
+            // 如果返回的是JSON，先检查数据类型
+            if (res.data instanceof Blob) {
+              // 如果数据是Blob，使用FileReader将其转换为文本
+              const reader = new FileReader()
+              reader.onload = function () {
+                try {
+                  const data = JSON.parse((reader as any).result)
+                  ElMessage.error(data?.message)
+                } catch (e) {
+                  console.error('解析JSON出错:', e)
+                }
+              }
+              reader.readAsText(res.data)
+            } else {
+              const data = JSON.parse(res.data)
+              ElMessage.error(data?.message)
+            }
+          } else {
+            // 如果返回的是文件，保存为Blob并下载
+            const blob = new Blob([res.data])
+            const link = document.createElement('a')
+            link.href = window.URL.createObjectURL(blob)
+            const filename = (res as any).headers['content-disposition'].split('filename=')[1]
+            link.download = filename.slice(1, filename.length - 1) // 从响应头中获取文件名并移除引号
+            link.click()
+          }
         }
       } finally {
+        //重置表单里面的文件列表
+        const uploadEl: ComponentRef<typeof ElUpload> = await getComponentExpose('upload')
+        uploadEl.clearFiles()
         loading.value = false
       }
     }

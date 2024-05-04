@@ -125,6 +125,8 @@ export default {
     decode: '文件解密'
   },
   fileDemo: {
+    formDes: '注意每次加解密都要重新上传文件',
+    www: 'qwe',
     fileencode: '文件加密',
     filedecode: '文件解密',
     uploadClick: '点击上传',
