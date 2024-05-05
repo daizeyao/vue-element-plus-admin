@@ -17,6 +17,15 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
     }
   },
   {
+    path: '/file-encode',
+    component: Layout,
+    redirect: '/file-encode/index',
+    name: 'Rootdir',
+    meta: {
+      hidden: true
+    }
+  },
+  {
     path: '/redirect',
     component: Layout,
     name: 'Redirect',
