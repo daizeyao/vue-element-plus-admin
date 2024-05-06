@@ -18,7 +18,8 @@ CMD ["pnpm", "run", "start:express"]
 
 # 第三阶段：基于Caddy构建
 FROM caddy:2-alpine
+COPY --from=build-stage /app/dist-pro /usr/share/caddy  # 复制前端构建的文件
+COPY --from=server-stage /app/express /app/express  # 复制后端应用
 COPY /docker/Caddyfile /etc/caddy/Caddyfile
-COPY --from=build-stage /app/dist /usr/share/caddy
 
 CMD ["caddy", "run"]
