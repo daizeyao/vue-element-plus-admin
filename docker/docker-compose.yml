@@ -1,27 +1,25 @@
-version: '3.8'
+version: '3'
 services:
-  file-db:
-    image: mysql:5.7
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: fileencode
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-    volumes:
-      - file-db-data:/var/lib/mysql
-
-  file-dev:
+  db:
     build:
-      context: ..  # 更改此处
-      dockerfile: docker/Dockerfile.dev  # 更改此处
-    ports:
-      - '3005:3005'
-      - '3006:3006'
+      context: ..
+      dockerfile: docker/Dockerfile-db
     volumes:
-      - /path/to/cert.pem:/etc/caddy/ssl/domain-chain.pem
-      - /path/to/key.pem:/etc/caddy/ssl/private.key
+      - db_data:/var/lib/mysql
+    restart: always
+
+  app:
+    depends_on:
+      - db
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile-app
+    ports:
+      - "8080:3005"
+    volumes:
+      - /home/hznuoj/vue-element-plus-admin/express:/app/express
+      - /home/hznuoj/vue-element-plus-admin/src:/app/src
+    restart: always
 
 volumes:
-  file-db-data:
+  db_data:

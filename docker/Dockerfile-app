@@ -1,0 +1,15 @@
+# Dockerfile-app
+FROM node:18
+
+WORKDIR /app
+
+COPY package.json .
+RUN npm config set registry http://registry.npmmirror.com
+RUN npm install -g pnpm@8.1.0
+RUN pnpm install
+
+COPY . .
+
+EXPOSE 8080
+
+CMD [ "pnpm", "run", "dev" ]
