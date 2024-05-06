@@ -1,4 +1,4 @@
-# 第一阶段：构建Node.js应用
+# 第一阶段：构建前端应用
 FROM node:18 AS build-stage
 WORKDIR /app
 RUN npm config set registry http://registry.npmmirror.com
@@ -8,8 +8,17 @@ RUN pnpm install
 COPY . .
 RUN pnpm run build:pro
 
-# 第二阶段：基于Caddy构建
+# 第二阶段：构建后端应用
+FROM node:18 AS server-stage
+WORKDIR /app
+COPY --from=build-stage /app/package*.json ./
+RUN pnpm install --production
+COPY --from=build-stage /app/express ./express
+CMD ["pnpm", "run", "start:express"]
+
+# 第三阶段：基于Caddy构建
 FROM caddy:2-alpine
 COPY /docker/Caddyfile /etc/caddy/Caddyfile
 COPY --from=build-stage /app/dist /usr/share/caddy
+
 CMD ["caddy", "run"]
