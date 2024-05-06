@@ -7,11 +7,11 @@ interface RoleParams {
 
 //传入的数据格式为UserLoginType，返回的数据为IResponse
 export const loginApi = (data: UserLoginType): Promise<IResponse> => {
-  return request.post({ url: 'http://localhost:3006/login', data })
+  return request.post({ url: 'http://localhost:3006/api/login', data })
 }
 
 export const registerApi = (data: UserLoginType): Promise<IResponse> => {
-  return request.post({ url: 'http://localhost:3006/register', data })
+  return request.post({ url: 'http://localhost:3006/api/register', data })
 }
 
 export const loginOutApi = (): Promise<IResponse> => {
@@ -19,7 +19,7 @@ export const loginOutApi = (): Promise<IResponse> => {
 }
 
 export const sendCodeApi = (email: string): Promise<IResponse> => {
-  return request.post({ url: 'http://localhost:3006/sendCode', data: { email } })
+  return request.post({ url: 'http://localhost:3006/api/sendCode', data: { email } })
 }
 
 export const getAdminRoleApi = (

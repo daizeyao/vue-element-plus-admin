@@ -1,0 +1,34 @@
+version: '3.8'
+services:
+  file-db:
+    image: mysql:5.7
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: fileencode
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    volumes:
+      - file-db-data:/var/lib/mysql
+
+  file-server:
+    build:
+      context: .  # 更改此处
+      dockerfile: ../docker/Dockerfile.server  # 更改此处
+    ports:
+      - '3006:3006'
+    depends_on:
+      - file-db
+
+  file-client:
+    build:
+      context: .  # 更改此处
+      dockerfile: ./docker/Dockerfile.client  # 更改此处
+    ports:
+      - '3005:3005'
+    depends_on:
+      - file-server
+
+volumes:
+  file-db-data:

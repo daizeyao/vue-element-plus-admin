@@ -18,12 +18,12 @@ app.use(
 )
 app.use(express.json())
 
-app.post('/sendCode', sendCode)
-app.post('/login', login)
-app.post('/register', register)
-app.post('/upload', upload)
-app.post('/encode', encode)
-app.post('/decode', decode)
+app.post('/api/sendCode', sendCode)
+app.post('/api/login', login)
+app.post('/api/register', register)
+app.post('/api/upload', upload)
+app.post('/api/encode', encode)
+app.post('/api/decode', decode)
 
 app.listen(3006, () => {
   console.log('后端服务已启动')
