@@ -6,9 +6,10 @@ RUN npm install -g pnpm@8.1.0
 COPY package*.json ./
 RUN pnpm install
 COPY . .
-RUN pnpm run dev
+RUN pnpm run build:pro
 
 # 第二阶段：基于Caddy构建
 FROM caddy:2-alpine
 COPY /docker/Caddyfile /etc/caddy/Caddyfile
 COPY --from=build-stage /app/dist /usr/share/caddy
+CMD ["caddy", "run"]
