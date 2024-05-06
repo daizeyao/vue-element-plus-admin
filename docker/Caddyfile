@@ -1,0 +1,37 @@
+{
+  http_port 80
+  https_port 443
+}
+
+:80 {
+  encode zstd gzip
+  log {
+    output file /data/access.log {
+      roll_size 1gb
+      roll_keep_for 72h
+    }
+    format json
+  }
+  handle {
+    reverse_proxy file-client:3005
+  }
+  redir https://{host}{uri}
+}
+
+:443 {
+  encode zstd gzip
+  log {
+    output file /data/access.log {
+      roll_size 1gb
+      roll_keep_for 72h
+    }
+    format json
+  }
+  handle /api/* {
+    reverse_proxy file-server:3006
+  }
+  handle {
+    reverse_proxy file-client:3005
+  }
+  tls /etc/caddy/ssl/domain-chain.pem /etc/caddy/ssl/private.key
+}

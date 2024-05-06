@@ -27,6 +27,9 @@ services:
       dockerfile: ./docker/Dockerfile.client  # 更改此处
     ports:
       - '3005:3005'
+    volumes:
+      - /path/to/cert.pem:/etc/caddy/ssl/domain-chain.pem
+      - /path/to/key.pem:/etc/caddy/ssl/private.key
     depends_on:
       - file-server
 
