@@ -12,26 +12,16 @@ services:
     volumes:
       - file-db-data:/var/lib/mysql
 
-  file-server:
+  file-dev:
     build:
       context: ..  # 更改此处
-      dockerfile: docker/Dockerfile.server  # 更改此处
-    ports:
-      - '3006:3006'
-    depends_on:
-      - file-db
-
-  file-client:
-    build:
-      context: ..  # 更改此处
-      dockerfile: docker/Dockerfile.client  # 更改此处
+      dockerfile: docker/Dockerfile.dev  # 更改此处
     ports:
       - '3005:3005'
+      - '3006:3006'
     volumes:
       - /path/to/cert.pem:/etc/caddy/ssl/domain-chain.pem
       - /path/to/key.pem:/etc/caddy/ssl/private.key
-    depends_on:
-      - file-server
 
 volumes:
   file-db-data:
