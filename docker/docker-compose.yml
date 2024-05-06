@@ -14,8 +14,8 @@ services:
 
   file-server:
     build:
-      context: .  # 更改此处
-      dockerfile: ../docker/Dockerfile.server  # 更改此处
+      context: ..  # 更改此处
+      dockerfile: docker/Dockerfile.server  # 更改此处
     ports:
       - '3006:3006'
     depends_on:
@@ -23,8 +23,8 @@ services:
 
   file-client:
     build:
-      context: .  # 更改此处
-      dockerfile: ./docker/Dockerfile.client  # 更改此处
+      context: ..  # 更改此处
+      dockerfile: docker/Dockerfile.client  # 更改此处
     ports:
       - '3005:3005'
     volumes:

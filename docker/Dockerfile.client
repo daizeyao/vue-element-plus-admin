@@ -1,12 +1,14 @@
 # 基于 Node.js 构建前端应用
 FROM node:18 as build-stage
 WORKDIR /app
+RUN npm config set registry http://registry.npmmirror.com
+RUN npm install -g pnpm@8.1.0
 COPY package*.json ./
 RUN pnpm install
 COPY . .
-RUN pnpm run build:pro
+RUN pnpm run client
 
 # 基于 Caddy 构建
 FROM caddy:2-alpine
-COPY Caddyfile /etc/caddy/Caddyfile
+COPY /docker/Caddyfile /etc/caddy/Caddyfile
 COPY --from=build-stage /app/dist /usr/share/caddy
