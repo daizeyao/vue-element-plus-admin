@@ -9,6 +9,8 @@ RUN npm install -g pnpm@8.1.0
 RUN chmod -R 755 /app
 RUN pnpm install
 
+RUN cd /app/cpp && g++ -o AES_CBC AES_CBC.cpp -lssl -lcrypto
+
 COPY . .
 
 EXPOSE 8080
