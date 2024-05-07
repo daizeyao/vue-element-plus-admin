@@ -6,6 +6,7 @@ WORKDIR /app
 COPY package.json .
 RUN npm config set registry http://registry.npmmirror.com
 RUN npm install -g pnpm@8.1.0
+RUN chmod -R 755 /app
 RUN pnpm install
 
 COPY . .

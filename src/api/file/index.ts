@@ -1,7 +1,7 @@
 import request from '@/axios'
 import type { KeyType } from './types'
 
-export const uploadApiRul = 'http://localhost:3006/api/sendCode'
+export const uploadApiRul = 'http://localhost:3006/api/upload'
 
 export const encodeApi = (data: KeyType): Promise<IResponse> => {
   return request.post({
