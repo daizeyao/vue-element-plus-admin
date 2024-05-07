@@ -13,9 +13,9 @@
     format json
   }
   handle {
-    reverse_proxy file-client:3005
+    root * /app/dist-pro
   }
-  redir https://{host}{uri}
+  redir http://{host}{uri}
 }
 
 :443 {
@@ -28,10 +28,11 @@
     format json
   }
   handle /api/* {
-    reverse_proxy file-server:3006
+    reverse_proxy http://localhost:3006
   }
   handle {
-    reverse_proxy file-client:3005
+    root * /app/dist-pro
+    file_server
   }
   tls /etc/caddy/ssl/domain-chain.pem /etc/caddy/ssl/private.key
 }

@@ -1,11 +1,11 @@
 import request from '@/axios'
 import type { KeyType } from './types'
 
-export const uploadApiRul = 'http://localhost:3006/api/upload'
+export const uploadApiRul = '/api/upload'
 
 export const encodeApi = (data: KeyType): Promise<IResponse> => {
   return request.post({
-    url: 'http://localhost:3006/api/encode',
+    url: '/api/encode',
     data,
     responseType: 'blob',
     headers: { 'Access-Control-Expose-Headers': 'Content-Disposition' }
@@ -14,7 +14,7 @@ export const encodeApi = (data: KeyType): Promise<IResponse> => {
 
 export const decodeApi = (data: KeyType): Promise<IResponse> => {
   return request.post({
-    url: 'http://localhost:3006/api/decode',
+    url: '/api/decode',
     data,
     responseType: 'blob',
     headers: { 'Access-Control-Expose-Headers': 'Content-Disposition' }
