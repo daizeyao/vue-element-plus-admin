@@ -8,7 +8,7 @@ import { FormSchema } from '@/components/Form'
 import { ElInput, ElFormItem, ElMessage, ElMessageBox, ElUpload } from 'element-plus'
 import { BaseButton } from '@/components/Button'
 import { useForm } from '@/hooks/web/useForm'
-import { encodeApi } from '@/api/file'
+import { encodeApi, uploadApiRul } from '@/api/file'
 import { KeyType } from '@/api/file/types'
 import { useValidator } from '@/hooks/web/useValidator'
 import { CONTENT_TYPE } from '@/constants'
@@ -41,7 +41,7 @@ const schema = reactive<FormSchema[]>([
     },
     componentProps: {
       limit: 2,
-      action: 'http://localhost:3006/upload',
+      action: uploadApiRul,
       // fileList: [],
       multiple: true,
       // onPreview: (uploadFile) => {

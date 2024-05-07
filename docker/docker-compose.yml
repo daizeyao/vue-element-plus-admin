@@ -1,6 +1,7 @@
 version: '3'
 services:
   db:
+    container_name: file-db
     build:
       context: ..
       dockerfile: docker/Dockerfile-db
@@ -9,12 +10,14 @@ services:
     restart: always
 
   app:
+    container_name: file-app
     depends_on:
       - db
     build:
       context: ..
       dockerfile: docker/Dockerfile-app
     ports:
+      - "3006:3006"
       - "8080:3005"
     volumes:
       - /home/hznuoj/vue-element-plus-admin/express:/app/express
