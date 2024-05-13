@@ -1,0 +1,15 @@
+docker run \
+  -d -it \
+  --name file-app \
+  --link file-db:db \
+  -p 3006:3006 \
+  -p 3005:3005 \
+  -p 80:80 \
+  -p 443:443 \
+  -v /root/vue-element-plus-admin/express:/app/express \
+  -v /root/vue-element-plus-admin/src:/app/src \
+  -v /root/vue-element-plus-admin/dist-pro:/app/dist-pro \
+  -v /root/vue-element-plus-admin/docker/Caddyfile:/etc/caddy/Caddyfile \
+  -v /etc/caddy/ssl:/etc/caddy/ssl \
+  --restart always \
+  dzy521/file-app-caddy:latest

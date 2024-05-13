@@ -66,8 +66,31 @@ docker run \
   dzy521/file-app-caddy:latest
 ```
 
-<div align="center"> <a href="https://github.com/kailong321200875/vue-element-plus-admin"> <img width="100" src="./public/logo.png"> </a> <br> <br>
+如果静态文件构建出错就是用在线的前端页面，只是加载时间长一些
 
+```
+:443 {
+  encode zstd gzip
+  log {
+    output file /data/access.log {
+      roll_size 1gb
+      roll_keep_for 72h
+    }
+    format json
+  }
+  handle /api/* {
+    reverse_proxy http://localhost:3006
+  }
+  handle {
+    reverse_proxy http://localhost:3005
+   # root * /app/dist-pro
+   # file_server
+  }
+  tls /etc/caddy/ssl/domain-chain.pem /etc/caddy/ssl/private.key
+}
+```
+
+<div align="center"> <a href="https://github.com/kailong321200875/vue-element-plus-admin"> <img width="100" src="./public/logo.png"> </a> <br> <br>
 [![license](https://img.shields.io/github/license/kailong321200875/vue-element-plus-admin.svg)](LICENSE)
 
 <h1>vue-element-plus-admin</h1>
